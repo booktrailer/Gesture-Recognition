@@ -21,64 +21,63 @@ def hand_direction(landmarks):
         return "left" if wrist_x > middle_joint_x else "right"
 
 def is_thumbs_up(landmarks):
-    # Thumb tip (4) and wrist (0)
+
     thumb_tip_y = landmarks[4].y
     thumb_joint_y = landmarks[3].y
 
-    # Check if thumb is above the wrist
     if thumb_tip_y < thumb_joint_y:
         if hand_direction(landmarks) == "left":
-            # Ensure other fingers are not extended (below thumb level)
+            # make sure other fingers are not extended
             other_fingers_extended = (
-                landmarks[8].x > landmarks[6].x and  # Index finger tip
-                landmarks[12].x > landmarks[10].x and  # Middle finger tip
-                landmarks[16].x > landmarks[14].x and  # Ring finger tip
-                landmarks[20].x > landmarks[18].x     # Pinky tip
+                landmarks[8].x > landmarks[6].x and  # Index finger
+                landmarks[12].x > landmarks[10].x and  # Middle finger
+                landmarks[16].x > landmarks[14].x and  # Ring finger
+                landmarks[20].x > landmarks[18].x     # Pinky
             )
-            return other_fingers_extended  # True if all other fingers are down
+            return other_fingers_extended 
         
         elif hand_direction(landmarks) == "right":
-            # Ensure other fingers are not extended (below thumb level)
+            # make sure other fingers are not extended
             other_fingers_extended = (
-                landmarks[8].x < landmarks[6].x and  # Index finger tip
-                landmarks[12].x < landmarks[10].x and  # Middle finger tip
-                landmarks[16].x < landmarks[14].x and  # Ring finger tip
-                landmarks[20].x < landmarks[18].x     # Pinky tip
+                landmarks[8].x < landmarks[6].x and  # Index finger
+                landmarks[12].x < landmarks[10].x and  # Middle finger
+                landmarks[16].x < landmarks[14].x and  # Ring finger
+                landmarks[20].x < landmarks[18].x     # Pinky
             )
-            return other_fingers_extended  # True if all other fingers are down
+            return other_fingers_extended 
         
 
-    return False  # Thumb is not up
+    return False 
 
 def is_thumbs_down(landmarks):
-    # Thumb tip (4) and wrist (0)
+
     thumb_tip_y = landmarks[4].y
     thumb_joint_y = landmarks[3].y
 
-    # Check if thumb is below wrist
+
     if thumb_tip_y > thumb_joint_y:
         if hand_direction(landmarks) == "left":
-            # Ensure other fingers are not extended (below thumb level)
+
             other_fingers_extended = (
-                landmarks[8].x > landmarks[6].x and  # Index finger tip
-                landmarks[12].x > landmarks[10].x and  # Middle finger tip
-                landmarks[16].x > landmarks[14].x and  # Ring finger tip
-                landmarks[20].x > landmarks[18].x     # Pinky tip
+                landmarks[8].x > landmarks[6].x and  
+                landmarks[12].x > landmarks[10].x and  
+                landmarks[16].x > landmarks[14].x and  
+                landmarks[20].x > landmarks[18].x     
             )
-            return other_fingers_extended  # True if all other fingers are down
+            return other_fingers_extended  
         
         elif hand_direction(landmarks) == "right":
-            # Ensure other fingers are not extended (below thumb level)
+            
             other_fingers_extended = (
-                landmarks[8].x < landmarks[6].x and  # Index finger tip
-                landmarks[12].x < landmarks[10].x and  # Middle finger tip
-                landmarks[16].x < landmarks[14].x and  # Ring finger tip
-                landmarks[20].x < landmarks[18].x     # Pinky tip
+                landmarks[8].x < landmarks[6].x and  
+                landmarks[12].x < landmarks[10].x and  
+                landmarks[16].x < landmarks[14].x and  
+                landmarks[20].x < landmarks[18].x  
             )
-            return other_fingers_extended  # True if all other fingers are down
+            return other_fingers_extended
         
 
-    return False  # Thumb is not up
+    return False
 
 def is_flip_off(landmarks):
     if landmarks[12].y < landmarks[11].y and landmarks[11].y < landmarks[10].y and landmarks[10].y < landmarks[0].y and hand_direction(landmarks) == "up":
