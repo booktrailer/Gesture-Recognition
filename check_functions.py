@@ -85,6 +85,13 @@ def is_flip_off(landmarks):
             return True
         
     return False
+
+def is_finger_up(landmarks):
+    if landmarks[8].y < landmarks[7].y and landmarks[7].y < landmarks[6].y and landmarks[6].y < landmarks[0].y and hand_direction(landmarks) == "up":
+        if landmarks[12].y > landmarks[10].y and landmarks[16].y > landmarks[14].y and landmarks[20].y > landmarks[18].y:
+            return True
+        
+    return False
 '''
 def is_thumbs_up(landmarks):
     # Thumb tip (4) and wrist (0)

@@ -27,7 +27,8 @@ while cap.isOpened():
     cv2.putText(frame, "thumbs up", (700,530),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
     cv2.putText(frame, "thumbs down", (700,560),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
     cv2.putText(frame, "flip off", (700,590),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
-    cv2.putText(frame, "(press q to quit)", (700,620),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "finger up", (700,620),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "(press q to quit)", (700,650),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
 
     
     if results.multi_hand_landmarks:
@@ -49,6 +50,9 @@ while cap.isOpened():
             
             if is_flip_off(hand_landmarks.landmark):
                 cv2.putText(frame, "kill yourself", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+            if is_finger_up(hand_landmarks.landmark):
+                cv2.putText(frame, "the sky is up", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
 
     # Display the frame
