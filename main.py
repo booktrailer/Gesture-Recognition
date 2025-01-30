@@ -2,13 +2,11 @@ import cv2
 import mediapipe as mp
 from check_functions import *
 
-# Initialize Mediapipe Hands
+
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7)
 mp_draw = mp.solutions.drawing_utils
 
-
-# Start Video Capture
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
@@ -16,10 +14,9 @@ while cap.isOpened():
     if not ret:
         break
     
-    # Flip the frame horizontally for a mirror-like effect
+    # make it mirror
     frame = cv2.flip(frame, 1)
-    
-    # Convert frame to RGB for Mediapipe
+
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb_frame)
 
@@ -55,7 +52,7 @@ while cap.isOpened():
                 cv2.putText(frame, "the sky is up", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
 
-    # Display the frame
+    # display the frame
     cv2.imshow("Simple Gesture Recognition", frame)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to quit
