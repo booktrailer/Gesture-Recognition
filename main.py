@@ -22,7 +22,7 @@ while cap.isOpened():
 
     #guesture list
     cv2.putText(frame, "Current Recognizable Gestures:", (700,430),cv2.FONT_HERSHEY_DUPLEX, 1, (255,255,0),2)
-    cv2.putText(frame, "high five", (700,370),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "high five", (700,470),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
     cv2.putText(frame, "thumbs up", (700,500),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
     cv2.putText(frame, "thumbs down", (700,530),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
     cv2.putText(frame, "flip off", (700,560),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
