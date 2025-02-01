@@ -91,6 +91,27 @@ def is_finger_up(landmarks):
             return True
         
     return False
+
+def is_finger_down(landmarks):
+    if landmarks[8].y > landmarks[7].y and landmarks[7].y > landmarks[6].y and landmarks[6].y > landmarks[0].y and hand_direction(landmarks) == "down":
+        if landmarks[12].y < landmarks[10].y and landmarks[16].y < landmarks[14].y and landmarks[20].y < landmarks[18].y:
+            return True
+        
+    return False
+
+def is_high_five(landmarks):
+    if landmarks[8].y < landmarks[7].y and landmarks[12].y < landmarks[11].y and landmarks[16].y < landmarks[15].y and landmarks[20].y < landmarks[19].y and hand_direction(landmarks) == "up":
+        if landmarks[4].x > landmarks[3].x > landmarks[2].x or landmarks[4].x < landmarks[3].x < landmarks[2].x:
+            return True
+    
+    return False
+
+def is_peace_sign(landmarks):
+    if landmarks[5].y > landmarks[6].y > landmarks[7].y > landmarks[8].y and landmarks[9].y > landmarks[10].y > landmarks[11].y > landmarks[12].y and hand_direction(landmarks) == "up":
+        if landmarks[16].y > landmarks[14].y and landmarks[20].y > landmarks[18].y:
+            return True
+    return False
+        
 '''
 def is_thumbs_up(landmarks):
     # Thumb tip (4) and wrist (0)

@@ -20,43 +20,62 @@ while cap.isOpened():
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb_frame)
 
-    cv2.putText(frame, "Current Recognizable Gestures:", (700,480),cv2.FONT_HERSHEY_DUPLEX, 1, (255,255,0),2)
-    cv2.putText(frame, "thumbs up", (700,530),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
-    cv2.putText(frame, "thumbs down", (700,560),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
-    cv2.putText(frame, "flip off", (700,590),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
-    cv2.putText(frame, "finger up", (700,620),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
-    cv2.putText(frame, "(press q to quit)", (700,650),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    #guesture list
+    cv2.putText(frame, "Current Recognizable Gestures:", (700,430),cv2.FONT_HERSHEY_DUPLEX, 1, (255,255,0),2)
+    cv2.putText(frame, "high five", (700,370),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "thumbs up", (700,500),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "thumbs down", (700,530),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "flip off", (700,560),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "finger up", (700,590),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "finger down", (700,620),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "peace sign", (700,650),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
+    cv2.putText(frame, "(press q to quit)", (700,680),cv2.FONT_HERSHEY_PLAIN, 2, (255,255,0),2)
 
     
     if results.multi_hand_landmarks:
 
-        for hand_landmarks in results.multi_hand_landmarks:
-            # Draw hand landmarks
-            cv2.putText(frame, hand_direction(hand_landmarks.landmark), (75, 75), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            
-            cv2.putText(frame, "Wrist y: " + str(hand_landmarks.landmark[0].y), (75, 125), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            cv2.putText(frame, "Wrist x: " + str(hand_landmarks.landmark[0].x), (75, 175), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        for i in range(len(results.multi_hand_landmarks)):
+            hand_landmarks = results.multi_hand_landmarks[i]
 
+            x = 0
+            if i == 0:
+                x = 50
+            else:
+                x = 550
+
+            # Draw hand landmarks
+            cv2.putText(frame, hand_direction(hand_landmarks.landmark), (x, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            
+            #location
+            cv2.putText(frame, "Wrist y: " + str(hand_landmarks.landmark[0].y), (x, 350), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            cv2.putText(frame, "Wrist x: " + str(hand_landmarks.landmark[0].x), (x, 385), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+            #draw the connections
             mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
+
             if is_thumbs_up(hand_landmarks.landmark):
-                cv2.putText(frame, "Thumbs Up!", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
+                cv2.putText(frame, "Thumbs Up!", (x, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
             if is_thumbs_down(hand_landmarks.landmark):
-                cv2.putText(frame, "Thumbs Down!", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            
+                cv2.putText(frame, "Thumbs Down!", (x, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
             if is_flip_off(hand_landmarks.landmark):
-                cv2.putText(frame, "kill yourself", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
+                cv2.putText(frame, "kill yourself", (x, 135), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
             if is_finger_up(hand_landmarks.landmark):
-                cv2.putText(frame, "the sky is up", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                cv2.putText(frame, "the sky is up", (x, 170), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            if is_finger_down(hand_landmarks.landmark):
+                cv2.putText(frame, "the ground is down", (x, 170), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            if is_high_five(hand_landmarks.landmark):
+                cv2.putText(frame, "High Five!", (x, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            if is_peace_sign(hand_landmarks.landmark):
+                cv2.putText(frame, "Peace Sign!", (x, 230), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
 
     # display the frame
-    cv2.imshow("Simple Gesture Recognition", frame)
+    cv2.imshow("Gesture Recognition", frame)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to quit
         break
 
 cap.release()
 cv2.destroyAllWindows()
+
