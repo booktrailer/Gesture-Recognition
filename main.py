@@ -1,6 +1,9 @@
 import cv2
 import mediapipe as mp
 from check_functions import *
+import os
+
+os.makedirs('save_frames', exist_ok=True)
 
 
 mp_hands = mp.solutions.hands
@@ -8,6 +11,7 @@ hands = mp_hands.Hands(min_detection_confidence=0.7, min_tracking_confidence=0.7
 mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+frame_count = 0
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -73,8 +77,17 @@ while cap.isOpened():
     # display the frame
     cv2.imshow("Gesture Recognition", frame)
     
-    if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to quit
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord('q'):
         break
+    if key == ord(' '):
+        filename = f'save_frames/frame_{frame_count}.png'
+        cv2.imwrite(filename, frame)
+        cv2.putText(frame, "Frame Saved!", (650, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
+        cv2.imshow("Gesture Recognition", frame)
+        cv2.waitKey(500)
+    
+    frame_count += 1
 
 cap.release()
 cv2.destroyAllWindows()

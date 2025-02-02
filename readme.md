@@ -5,3 +5,5 @@ I coded functions including find the slope of the hand, check if thumbs up, chec
 Enjoy! I have an even bigger project with gesture recognition that I hope to be able to "ship" next season.
 
 Update: Both hands can be viewed at the same time, and also added finger pointing down, peace sign, high five, and more!
+
+Update 2: Allows you to save frames onto your computer in a "save_frames" folder! Press space bar to activate this feature.
